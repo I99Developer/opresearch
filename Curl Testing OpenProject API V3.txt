@@ -1,0 +1,79 @@
+STEPS TO MAKE THIS WORK WITH CURL
+
+[GET YOUR API KEY]
+1. Login to open project
+	a. go to "my account" by click on the avatar
+	b. navigate to "Access token" via the left nav bar
+	c. Click on "Show" link on the API Line
+	d. copy the key to a safe place
+
+[BASICS]
+2. 	Open a terminal window, I'm using putty to get access to the box
+	a. REGISTER your API_KEY variable in your terminal session, this will be good for as long as you stay in the same terminal session.
+				 a1. API_KEY=paste the key you obtained from step 1 [PRESS ENTER]
+				 
+[TEST BASIC CALL]
+3. 	Use the basic URL example below (change the url to target your server of course) to test your access
+	3.1 sudo curl -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/ [PRESS ENTER]
+	3.2 Expected results should return an http response with some basic links information for all api endpoints
+
+[GET TARGET PROJECT ID]
+4. 	sudo curl -H "Accept: application/json" -X GET -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/projects/da-tfs-port [PRESS ENTER] (Replace da-tfs-port) with your project identifier key
+	4.1 you can find your project key in the UI by navigating to the project settings tab of the target project.  The field is named "Identifier"
+	4.2 after running 4.1, the http response will include a json object, one of the fields in the object is the "id":# where # equals your project id
+
+[GET TARGET WORK PACKAGE TYPE ID]
+5. 	sudo curl -H "Accept: application/json" -X GET -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/types/ [PRESS ENTER]
+	5.1 after running 5, the http response will include a json object, objects for each work package type will be returned, locate the object with your target work package type by referencing the "title" field, the work item type id is referenced in the "id:"# field where # equals the work item type id
+
+[GET TARGET STATUS ID]
+6. 	sudo curl -H "Accept: application/json" -X GET -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/statuses/ [PRESS ENTER]
+	6.1 after running 6, the http response will include a json object, objects for each status type will be returned, locate the object with your target status type by referencing the "name" field, the status type id is referenced in the "id:"# field where # equals the status type id
+
+[GET TARGET USER ID]
+7. 	sudo curl -H "Accept: application/json" -X GET -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/users/ [PRESS ENTER]
+	7.1 after running 7, the http response will include a json object, objects for each user will be returned, locate the object with your target user by referencing the "login" field, the user id is referenced in the "id:"# field where # equals the user id
+
+[GET TARGET PRIORITY ID]
+8. 	sudo curl -H "Accept: application/json" -X GET -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/priorities/ [PRESS ENTER]
+	8.1 after running 8, the http response will include a json object, objects for each priority type will be returned, locate the object with your target priority type by referencing the "name" field, the priority type id is referenced in the "id:"# field where # equals the priority type id
+	
+	
+EXAMPLE API CALL
+//WORKING!!!!
+sudo curl -u apikey:$API_KEY http://tpa0centop.datalinksoftware.com/openproject/api/v3/work_packages/?notify=false  -H "Content-type: application/json" -X POST -d '{"subject":"My subject","description": {"format": "textile", "raw": "My raw textile formatted description. Bye guys!"}, "_links": {"type": {"href":"/api/v3/types/6", "title": "User story"}, "status":{"href":"/api/v3/statuses/1"}, "priority":{"href":"/api/v3/priorities/8", "title": "normal"}, "assignee": {"href": "/api/v3/users/9"}, "project": {"href": "/api/v3/projects/15"}}}'
+
+-d '
+{
+	"subject":"My subject",
+	"description": 
+		{
+			"format": "textile", 
+			"raw": "My raw textile formatted description. Bye guys!"
+		}, 
+	"_links": 
+		{
+			"type": 
+				{
+					"href":"/api/v3/types/6", 
+					"title": "User story"
+				}, 
+			"status":
+				{
+					"href":"/api/v3/statuses/1"
+				}, 
+			"priority":
+				{
+					"href":"/api/v3/priorities/8", 
+					"title": "normal"
+				}, 
+			"assignee": 
+				{
+					"href": "/api/v3/users/9"
+				}, 
+			"project": 
+				{
+					"href": "/api/v3/projects/15"
+				}
+		}
+}
