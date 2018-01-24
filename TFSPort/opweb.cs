@@ -67,7 +67,7 @@ namespace TFSPort
 
             WebRequest wr = WebRequest.Create("http://yourserver.com/openproject/" + api);
         
-            wr.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("apikey" + ":" + "409644f68d2e7bfe46645d298e811850686ea083"));
+            wr.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("apikey" + ":" + "yourkey"));
             wr.Method = "GET";
             wr.ContentType = "application/json";
 
