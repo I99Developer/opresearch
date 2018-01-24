@@ -36,7 +36,7 @@ namespace TFSPort
         private string m_SourceProject;
         private int m_TargetProjectId;
 
-        internal void Init(string targetProject, string sourceProject)
+        internal void Init(string targetProject, string sourceProject, string baseurl)
         {
             m_Users = GetItems<OpenProjectUser>("/api/v3/users/");
             m_Types = GetItems<WorkItemType>("/api/v3/types/");
@@ -65,7 +65,7 @@ namespace TFSPort
         {
             List<T> retVal = new List<T>();
 
-            WebRequest wr = WebRequest.Create("http://tpa0centop.datalinksoftware.com/openproject" + api);
+            WebRequest wr = WebRequest.Create("http://yourserver.com/openproject/" + api);
         
             wr.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("apikey" + ":" + "409644f68d2e7bfe46645d298e811850686ea083"));
             wr.Method = "GET";
