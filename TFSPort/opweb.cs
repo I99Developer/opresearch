@@ -36,7 +36,7 @@ namespace TFSPort
         private string m_SourceProject;
         private int m_TargetProjectId;
 
-        internal void Init(string targetProject, string sourceProject, string baseurl)
+        internal void Init(string targetProject, string sourceProject)
         {
             m_Users = GetItems<OpenProjectUser>("/api/v3/users/");
             m_Types = GetItems<WorkItemType>("/api/v3/types/");
